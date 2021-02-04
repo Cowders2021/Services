@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CowdersPictures", "CowdersPictures\CowdersPictures.csproj", "{39632C2C-63F1-42E6-BCA1-A019EB323AB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CowdersPictures", "CowdersPictures\CowdersPictures.csproj", "{57A23117-E190-41E0-A4D3-5D8122DB8779}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{39632C2C-63F1-42E6-BCA1-A019EB323AB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39632C2C-63F1-42E6-BCA1-A019EB323AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39632C2C-63F1-42E6-BCA1-A019EB323AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39632C2C-63F1-42E6-BCA1-A019EB323AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A23117-E190-41E0-A4D3-5D8122DB8779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A23117-E190-41E0-A4D3-5D8122DB8779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A23117-E190-41E0-A4D3-5D8122DB8779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A23117-E190-41E0-A4D3-5D8122DB8779}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B3C53071-1A37-426E-8C18-E3A943D763C8}
+		SolutionGuid = {113A5C4D-6F00-408B-AFD7-C8318E76FC95}
 	EndGlobalSection
 EndGlobal
