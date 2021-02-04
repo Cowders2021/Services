@@ -13,7 +13,7 @@ namespace CowdersPictures.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        internal static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
@@ -39,7 +39,7 @@ namespace CowdersPictures.Controllers
         }
 
         [HttpPost]
-        public void Post(string jSon)
+        public void Post(string json)
         {
            
         }
