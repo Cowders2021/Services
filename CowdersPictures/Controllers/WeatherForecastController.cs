@@ -37,5 +37,11 @@ namespace CowdersPictures.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        public void Post(string jSon)
+        {
+           
+        }
     }
 }
