@@ -26,21 +26,23 @@ namespace CowdersPictures
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(); // Make sure you call this previous to AddMvc
+
             services.AddControllers();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
             //services.AddSignalR()
             //    .AddAzureSignalR();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("https://localhost:44318",
-                                                          "https://blue-tree-069c24103.azurestaticapps.net");
-                                  });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(name: MyAllowSpecificOrigins,
+            //                      builder =>
+            //                      {
+            //                          builder.WithOrigins("https://localhost:44318",
+            //                                              "https://blue-tree-069c24103.azurestaticapps.net");
+            //                      });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +52,10 @@ namespace CowdersPictures
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(
+                    options => options.WithOrigins("https://localhost:44318", "https://blue-tree-069c24103.azurestaticapps.net").AllowAnyMethod()
+                );
 
             app.UseHttpsRedirection();
 
@@ -73,7 +79,7 @@ namespace CowdersPictures
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins);
+            //app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
