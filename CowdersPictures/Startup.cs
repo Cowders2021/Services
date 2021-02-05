@@ -29,8 +29,8 @@ namespace CowdersPictures
             services.AddControllers();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
-            services.AddSignalR()
-                .AddAzureSignalR();
+            //services.AddSignalR()
+            //    .AddAzureSignalR();
 
             services.AddCors(options =>
             {
@@ -68,7 +68,7 @@ namespace CowdersPictures
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/chat");
+                //endpoints.MapHub<ChatHub>("/chat");
             });
 
             app.UseRouting();
