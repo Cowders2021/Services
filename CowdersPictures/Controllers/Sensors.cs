@@ -27,19 +27,40 @@ namespace CowdersPictures.Controllers
             _mapper = mapper;
         }
 
-        //// GET api/<SensorsController>/5
-        [HttpGet("{id}")]
-        public IEnumerable<Dtos.Sensor> Get(int id)
+        //// GET api/<SensorsController>/3
+        [HttpGet("{minuttes}")]
+        public IEnumerable<Dtos.Sensor> Get(int minuttes)
         {
             var table = GetSensorsTable();
 
-            TableQuery<SensorEntity> rangeQuery = new TableQuery<SensorEntity>()
-                  .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, id.ToString()));
+            TableQuery<SensorEntity> noQuery = new TableQuery<SensorEntity>()
+                  .Where(TableQuery.GenerateFilterCondition("id", QueryComparisons.NotEqual, 0.ToString()));
 
-            var entities = table.ExecuteQuery(rangeQuery).ToList();
+            var entities = table.ExecuteQuery(noQuery).ToList().OrderByDescending(x => x.EventEnqueuedUtcTime);
 
-            return _mapper.Map<IEnumerable<Dtos.Sensor>>(entities);
+            var ent2 = entities.Where(x => x.EventEnqueuedUtcTime > DateTime.UtcNow.AddMinutes(minuttes * -1));
+
+            //TableQuery<SensorEntity> rangeQuery = new TableQuery<SensorEntity>()
+            //      .Where(TableQuery.GenerateFilterCondition("EventEnqueuedUtcTime", QueryComparisons.GreaterThan, DateTime.UtcNow.AddMinutes(minuttes * -1).ToString()));
+
+            //var entities = table.ExecuteQuery(rangeQuery).ToList().OrderByDescending(x => x.EventEnqueuedUtcTime);
+
+            return _mapper.Map<IEnumerable<Dtos.Sensor>>(ent2);
         }
+
+        ////// GET api/<SensorsController>
+        //[HttpGet]
+        //public IEnumerable<Dtos.Sensor> Get()
+        //{
+        //    var table = GetSensorsTable();
+
+        //    TableQuery<SensorEntity> rangeQuery = new TableQuery<SensorEntity>()
+        //          .Where(TableQuery.GenerateFilterCondition("EventEnqueuedUtcTime", QueryComparisons.Equal, id.ToString()));
+
+        //    var entities = table.ExecuteQuery(rangeQuery).ToList().OrderByDescending(x => x.EventEnqueuedUtcTime).Take(3);
+
+        //    return _mapper.Map<IEnumerable<Dtos.Sensor>>(entities);
+        //}
 
         private CloudTable GetSensorsTable()
 
