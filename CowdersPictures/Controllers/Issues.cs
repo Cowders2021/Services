@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using SignalR.Mvc;
 using CowdersPictures.Extentions;
 using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,9 +23,9 @@ namespace CowdersPictures.Controllers
         private IConfiguration _configuration;
         private IMapper _mapper;
 
-        public Issues(IConfiguration configuration, IMapper mapper )
+        public Issues(IConfiguration configuration, IMapper mapper, IHubContext<ChatHub> hubContext)
         {
-            _chatHub = new ChatHub();
+            _chatHub = new ChatHub(hubContext);
             _configuration = configuration;
             _mapper = mapper;
         }
@@ -76,44 +77,24 @@ namespace CowdersPictures.Controllers
         [HttpPost]
         public async Task Post([FromBody] Dtos.Issue value)
         {
-            try
+            await _chatHub.BroadcastMessage(value.Id, Newtonsoft.Json.JsonConvert.SerializeObject(value));
+            var table = GetIssuesTable();
+
+            var entity = new IssueEntity(value.Id)
             {
-                var table = GetIssuesTable();
+                CustomerId = value.CustomerId,
+                Desctiption = value.Desctiption,
+                ProductId = value.ProductId,
+                Text = value.Text
+            };
 
-                var entity = new IssueEntity(value.Id)
-                {
-                    CustomerId = value.CustomerId,
-                    Desctiption = value.Desctiption,
-                    ProductId = value.ProductId,
-                    Text = value.Text
-                };
+            // Create the InsertOrReplace table operation
+            TableOperation insertOrMergeOperation = TableOperation.InsertOrMerge(entity);
 
-                // Create the InsertOrReplace table operation
-                TableOperation insertOrMergeOperation = TableOperation.InsertOrMerge(entity);
-
-                // Execute the operation.
-                TableResult result = await table.ExecuteAsync(insertOrMergeOperation);
-                IssueEntity insertedCustomer = result.Result as IssueEntity;
-
-
-                //_chatHub.BroadcastMessage(value.Text, value.Desctiption);
-            }
-            catch (Exception)
-            {
-            }
+            // Execute the operation.
+            TableResult result = await table.ExecuteAsync(insertOrMergeOperation);
+            IssueEntity insertedCustomer = result.Result as IssueEntity;
             
         }
-
-        //// PUT api/<Issues>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] Dtos.Issue value)
-        //{
-        //}
-
-        //// DELETE api/<Issues>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
